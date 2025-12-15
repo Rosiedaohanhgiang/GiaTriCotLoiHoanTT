@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoanTT - Culture OS (Ultimate Master)</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B1120',
+                            gold: '#C5A059',
+                            goldLight: '#E5C985',
+                            slate: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0B1120; color: #E2E8F0; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1E293B; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, rgba(197, 160, 89, 0.15) 0%, transparent 100%);
+            border-left: 3px solid #C5A059;
+            color: #C5A059;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            border-bottom: 2px solid #C5A059;
+            color: #C5A059;
+            background: rgba(197, 160, 89, 0.05);
+        }
+
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden text-sm md:text-base">
+
+    <!-- Header -->
+    <header class="h-16 bg-[#0F172A] border-b border-gray-800 flex items-center justify-between px-6 z-30 shrink-0 shadow-lg">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded bg-brand-gold flex items-center justify-center text-[#0B1120] font-display font-bold text-xl shadow-lg">H</div>
+            <div class="flex flex-col">
+                <h1 class="font-display font-bold text-lg uppercase tracking-wider text-white leading-none">HoanTT Group</h1>
+                <span class="text-[10px] text-brand-gold uppercase tracking-[0.2em] font-medium">Culture Operating System (Master)</span>
+            </div>
+        </div>
+        <div class="hidden md:flex items-center gap-4 text-xs text-gray-400 font-mono">
+             <i class="fa-solid fa-server text-green-500"></i> V3.0 STABLE
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-20 md:w-64 bg-[#0B1120] border-r border-gray-800 flex flex-col shrink-0 z-20 overflow-y-auto">
+            <div class="p-4 space-y-1">
+                <p class="hidden md:block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 pl-2">Executive View</p>
+                <button onclick="renderView('dashboard')" id="nav-dashboard" class="nav-item active w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 transition-all">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i> <span class="hidden md:block">Dashboard</span>
+                </button>
+                <div class="h-px bg-gray-800 my-3"></div>
+                <p class="hidden md:block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 pl-2">Core Values</p>
+                <button onclick="renderView('value1')" id="nav-value1" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-scale-balanced w-5 text-center text-orange-500"></i> <span class="hidden md:block">1. Chính Trực</span>
+                </button>
+                <button onclick="renderView('value2')" id="nav-value2" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-users-viewfinder w-5 text-center text-green-500"></i> <span class="hidden md:block">2. Tận Tâm</span>
+                </button>
+                <button onclick="renderView('value3')" id="nav-value3" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-diagram-project w-5 text-center text-blue-500"></i> <span class="hidden md:block">3. Hợp Lực</span>
+                </button>
+                <button onclick="renderView('value4')" id="nav-value4" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-bolt w-5 text-center text-purple-500"></i> <span class="hidden md:block">4. Linh Hoạt</span>
+                </button>
+                <button onclick="renderView('value5')" id="nav-value5" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-crown w-5 text-center text-brand-gold"></i> <span class="hidden md:block">5. Đẳng Cấp</span>
+                </button>
+                <div class="h-px bg-gray-800 my-3"></div>
+                <button onclick="renderView('roadmap')" id="nav-roadmap" class="nav-item w-full text-left px-3 py-3 rounded-lg flex items-center justify-center md:justify-start gap-3 text-gray-400 transition-all">
+                    <i class="fa-solid fa-map w-5 text-center"></i> <span class="hidden md:block">Lộ Trình</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="flex-1 overflow-y-auto bg-gradient-to-br from-[#0F172A] via-[#111827] to-[#1E1B4B] relative">
+            <div id="app-content" class="max-w-7xl mx-auto p-6 md:p-10 pb-20 min-h-full">
+                <!-- Content Injected Here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- DATA & LOGIC -->
+    <script>
+        const db = {
+            dashboard: {
+                title: "BÁO CÁO SỨC KHỎE TỔ CHỨC",
+                desc: "Hệ thống quản trị văn hóa toàn diện, giải quyết tận gốc các điểm nghẽn vận hành.",
+                stats: [
+                    { label: "Nỗi đau cốt lõi", value: "4", icon: "fa-triangle-exclamation", color: "text-red-500" },
+                    { label: "Giá trị cốt lõi", value: "5", icon: "fa-gem", color: "text-brand-gold" },
+                    { label: "Cấp độ hành vi", value: "5", icon: "fa-layer-group", color: "text-blue-500" }
+                ],
+                pains: [
+                    { title: "Xung Đột Kênh & Giá", desc: "Loạn giá GT/MT, Sale lấn vùng, báo cáo ảo.", impact: "Mất uy tín NPP", icon: "fa-tags", color: "text-red-500" },
+                    { title: "Silos & Đổ Lỗi", desc: "Mâu thuẫn Sales-MKT, quy trình gãy.", impact: "Lãng phí nguồn lực", icon: "fa-people-arrows", color: "text-orange-500" },
+                    { title: "Thiếu Hệ Thống", desc: "Làm việc cảm tính, phụ thuộc cá nhân.", impact: "Rủi ro vận hành", icon: "fa-network-wired", color: "text-blue-500" },
+                    { title: "Hình Ảnh Chưa Tới", desc: "Sản phẩm tốt nhưng tác phong 'bình dân'.", impact: "Giảm giá trị thương hiệu", icon: "fa-id-card", color: "text-brand-gold" }
+                ]
+            },
+            values: [
+                {
+                    id: "value1",
+                    title: "Chính Trực & Minh Bạch",
+                    slogan: "Niềm tin là tiền tệ",
+                    manifesto: "Tại HoanTT, chúng ta tin rằng 'Sự thật là sức mạnh'. Mọi mối quan hệ bền vững với Đại lý, Đối tác đều bắt đầu từ việc giữ đúng lời hứa về Giá và Vùng miền. Che giấu sự thật là hành vi phá hoại tàn khốc nhất.",
+                    icon: "fa-scale-balanced",
+                    color: "text-orange-500",
+                    accent: "border-orange-500",
+                    strategy: {
+                        advantage: "Tạo 'Vùng an toàn' cho Đối tác. NPP chọn HoanTT vì sự bảo hộ giá tuyệt đối, không có 'deal ngầm'.",
+                        kpi: "Tỷ lệ vi phạm giá = 0% | Sai lệch tồn kho < 0.5%"
+                    },
+                    behaviors: {
+                        business: {
+                            role: "Sales - Marketing",
+                            items: [
+                                { context: "Khi chốt đơn hàng với đại lý", do: "Cam kết bán đúng giá niêm yết và chính sách thưởng đã ban hành.", dont: "Tự ý 'cắt máu' (giảm giá riêng) hoặc hứa hẹn chiết khấu ngoài luồng để chốt đơn nhanh." },
+                                { context: "Khi làm báo cáo tuần/tháng", do: "Ghi nhận trung thực số liệu Sell-out (hàng thực bán) và tồn kho thực tế tại điểm bán.", dont: "Báo cáo số ảo (hàng còn trong kho NPP nhưng báo đã bán) để đạt KPI." },
+                                { context: "Khi phát hiện đồng nghiệp làm sai", do: "Cảnh báo trực tiếp hoặc báo cáo cấp trên (Whistleblowing) để bảo vệ hệ thống.", dont: "Bao che, nhắm mắt làm ngơ vì 'nể nang' hoặc sợ mất lòng." }
+                            ]
+                        },
+                        office: {
+                            role: "Back Office",
+                            items: [
+                                { context: "Khi xử lý số liệu tài chính", do: "Hạch toán chính xác 100%, sai 1 đồng cũng tìm ra nguyên nhân.", dont: "Xào nấu số liệu (Cook the books) để làm đẹp báo cáo tài chính." },
+                                { context: "Khi tuyển dụng nhân sự", do: "Minh bạch về chế độ lương thưởng, không hứa suông với ứng viên.", dont: "Che giấu các khó khăn của công ty để dụ ứng viên vào làm." }
+                            ]
+                        }
+                    },
+                    levels: [
+                        { 
+                            lv: 1, name: "Cần Điều Chỉnh Ngay", desc: "Dưới kỳ vọng (Below Expectations)", color: "text-red-500",
+                            indicators: [
+                                "Chưa thể hiện sự trung thực trong báo cáo số liệu hoặc thông tin công việc.",
+                                "Có hành vi vi phạm các quy tắc cốt lõi về giá và vùng miền, gây rủi ro cho tổ chức.",
+                                "Thường xuyên che giấu lỗi sai thay vì nhận trách nhiệm."
+                            ],
+                            note: "⚠️ Ghi chú đánh giá: Áp dụng PIP (Cam kết cải thiện) trong 30 ngày. Nếu tái phạm -> Dừng hợp tác."
+                        },
+                        { 
+                            lv: 2, name: "Đang Phát Triển", desc: "Đang học hỏi (Developing)", color: "text-orange-500",
+                            indicators: [
+                                "Có ý thức tuân thủ nhưng đôi khi còn sai sót số liệu do chưa cẩn thận.",
+                                "Cần sự nhắc nhở và giám sát thường xuyên để đảm bảo báo cáo đúng hạn.",
+                                "Chưa nắm vững toàn bộ các quy định về chính sách, cần được đào tạo thêm."
+                            ],
+                            note: "📝 Ghi chú đánh giá: Cần người kèm cặp (Mentor). Không đủ điều kiện xét thưởng năng suất quý."
+                        },
+                        { 
+                            lv: 3, name: "Vững Vàng", desc: "Đạt chuẩn (Solid Performer)", color: "text-green-500",
+                            indicators: [
+                                "Tuân thủ 100% quy định về giá, vùng và chế độ báo cáo.",
+                                "Số liệu cung cấp luôn chính xác, minh bạch, đáng tin cậy.",
+                                "Trung thực thừa nhận sai sót ngay khi phát hiện và chủ động khắc phục."
+                            ],
+                            note: "✅ Ghi chú đánh giá: Mức tiêu chuẩn để nhận 100% Lương cứng & Thưởng cơ bản."
+                        },
+                        { 
+                            lv: 4, name: "Bứt Phá", desc: "Vượt kỳ vọng (High Achiever)", color: "text-blue-500",
+                            indicators: [
+                                "Chủ động phát hiện các lỗ hổng hoặc rủi ro tiềm ẩn trước khi chúng xảy ra.",
+                                "Đề xuất các giải pháp giúp tăng cường tính minh bạch và kiểm soát tốt hơn.",
+                                "Tích cực nhắc nhở và hỗ trợ đồng nghiệp tuân thủ quy định."
+                            ],
+                            note: "🌟 Ghi chú đánh giá: Căn cứ xét Thưởng nóng hoặc Tăng lương định kỳ."
+                        },
+                        { 
+                            lv: 5, name: "Dẫn Dắt & Kiến Tạo", desc: "Hình mẫu (Role Model)", color: "text-yellow-500",
+                            indicators: [
+                                "Xây dựng và hoàn thiện hệ thống kiểm soát (Audit) cho toàn bộ phận/công ty.",
+                                "Dám lên tiếng bảo vệ sự thật và các nguyên tắc cốt lõi trước mọi áp lực.",
+                                "Là tấm gương sáng về sự liêm chính, truyền cảm hứng tin cậy cho đội ngũ."
+                            ],
+                            note: "👑 Ghi chú đánh giá: Quy hoạch cán bộ nguồn (Key Person). Xét thăng chức và ESOP."
+                        }
+                    ]
+                },
+                {
+                    id: "value2",
+                    title: "Tận Tâm Phụng Sự",
+                    slogan: "Đối tác tăng trưởng",
+                    manifesto: "Chúng ta không bán sản phẩm, chúng ta bán giải pháp kinh doanh. Khách hàng (Đại lý) chỉ trung thành khi họ kiếm được tiền từ HoanTT. Phụng sự là giúp họ bán hàng (Sell-out) chứ không phải ép họ nhập hàng (Sell-in).",
+                    icon: "fa-users-viewfinder",
+                    color: "text-green-500",
+                    accent: "border-green-500",
+                    strategy: {
+                        advantage: "Chi phí chuyển đổi cao. Khách hàng phụ thuộc vào sự tư vấn kinh doanh của HoanTT.",
+                        kpi: "NPS Score > 9 | Tỷ lệ Re-order"
+                    },
+                    behaviors: {
+                        business: {
+                            role: "Sales - Marketing",
+                            items: [
+                                { context: "Khi đại lý tồn kho cao", do: "Dừng ép nhập hàng. Ngồi lại cùng đại lý lên kế hoạch xả hàng (trưng bày, activation).", dont: "Tiếp tục dọa cắt code hoặc ép nhập thêm hàng mới để đạt chỉ tiêu Sales-in." },
+                                { context: "Khi khách hàng phàn nàn", do: "Lắng nghe, xin lỗi trước (dù đúng sai) và phản hồi hướng xử lý trong vòng 2 giờ.", dont: "Tranh cãi tay đôi, đổ lỗi cho khách bảo quản sai, hoặc im lặng quá 24h." }
+                            ]
+                        },
+                        office: {
+                            role: "Back Office",
+                            items: [
+                                { context: "Khi Sales/MKT nhờ hỗ trợ", do: "Coi họ là Khách hàng nội bộ. Xử lý yêu cầu với thái độ phục vụ.", dont: "Hạch sách, cửa quyền: 'Đã gửi mail chưa?', 'Sai biểu mẫu rồi làm lại đi'." },
+                                { context: "Khi xây dựng quy trình", do: "Đặt câu hỏi: 'Quy trình này có giúp bộ phận khác làm việc nhanh hơn không?'", dont: "Vẽ ra quy trình phức tạp để quản lý cho tiện mình, nhưng gây khó cho người khác." }
+                            ]
+                        }
+                    },
+                    levels: [
+                        { 
+                            lv: 1, name: "Cần Điều Chỉnh Ngay", desc: "Dưới kỳ vọng (Below Expectations)", color: "text-red-500",
+                            indicators: [
+                                "Thường xuyên có thái độ thiếu chuyên nghiệp (tranh cãi, thờ ơ) với khách hàng/đồng nghiệp.",
+                                "Phản hồi yêu cầu rất chậm trễ, để trôi việc gây ảnh hưởng đến người khác.",
+                                "Chưa nhận thức được tầm quan trọng của việc phục vụ khách hàng."
+                            ],
+                            note: "⚠️ Ghi chú đánh giá: Cảnh cáo văn bản lần 1. Chuyển vị trí nếu không cải thiện."
+                        },
+                        { 
+                            lv: 2, name: "Đang Phát Triển", desc: "Đang học hỏi (Developing)", color: "text-orange-500",
+                            indicators: [
+                                "Có tinh thần phục vụ nhưng còn thụ động, khách hỏi mới trả lời.",
+                                "Đôi khi còn trễ hẹn (deadline/SLA) và cần được nhắc nhở.",
+                                "Kỹ năng giao tiếp và xử lý tình huống chưa khéo léo."
+                            ],
+                            note: "📝 Ghi chú đánh giá: Cần tham gia khóa đào tạo Kỹ năng CSKH/Giao tiếp."
+                        },
+                        { 
+                            lv: 3, name: "Vững Vàng", desc: "Đạt chuẩn (Solid Performer)", color: "text-green-500",
+                            indicators: [
+                                "Luôn phản hồi và giải quyết yêu cầu đúng thời gian cam kết (SLA).",
+                                "Tư vấn thông tin chính xác, đầy đủ với thái độ lịch sự, hòa nhã.",
+                                "Đảm bảo sự hài lòng cơ bản của khách hàng trong phạm vi trách nhiệm."
+                            ],
+                            note: "✅ Ghi chú đánh giá: Đạt chỉ tiêu đánh giá 360 độ về thái độ."
+                        },
+                        { 
+                            lv: 4, name: "Bứt Phá", desc: "Vượt kỳ vọng (High Achiever)", color: "text-blue-500",
+                            indicators: [
+                                "Chủ động dự báo nhu cầu và rủi ro cho khách hàng trước khi họ nhận ra.",
+                                "Đề xuất các giải pháp linh hoạt giúp khách hàng tối ưu lợi ích.",
+                                "Nhớ rõ thói quen, sở thích của khách hàng để phục vụ cá nhân hóa."
+                            ],
+                            note: "🌟 Ghi chú đánh giá: Ưu tiên phân bổ Khách hàng Key/Dự án quan trọng."
+                        },
+                        { 
+                            lv: 5, name: "Dẫn Dắt & Kiến Tạo", desc: "Hình mẫu (Role Model)", color: "text-yellow-500",
+                            indicators: [
+                                "Giải quyết xuất sắc các tình huống khủng hoảng, biến khách hàng khó tính thành fan trung thành.",
+                                "Kiến tạo hoặc cải tiến quy trình dịch vụ để nâng cao trải nghiệm chung.",
+                                "Được khách hàng/đối tác chỉ đích danh yêu cầu làm việc và khen ngợi."
+                            ],
+                            note: "👑 Ghi chú đánh giá: Xét danh hiệu 'Best Service' và thưởng năm đặc biệt."
+                        }
+                    ]
+                },
+                {
+                    id: "value3",
+                    title: "Hợp Lực Không Đổ Lỗi",
+                    slogan: "Tốc độ thống nhất",
+                    manifesto: "Kẻ thù nằm bên ngoài công ty (đối thủ cạnh tranh), không phải ở phòng ban bên cạnh. Khi có sự cố, câu hỏi duy nhất được chấp nhận là: 'Giải pháp là gì?'. Mọi hành vi chỉ trích cá nhân đều bị nghiêm cấm.",
+                    icon: "fa-diagram-project",
+                    color: "text-blue-500",
+                    accent: "border-blue-500",
+                    strategy: {
+                        advantage: "Tốc độ ra quân nhanh gấp đôi đối thủ nhờ sự đồng bộ Sales-Marketing.",
+                        kpi: "On-time Delivery | ROI Marketing"
+                    },
+                    behaviors: {
+                        business: {
+                            role: "Sales - Marketing",
+                            items: [
+                                { context: "Khi doanh số không đạt", do: "Sales và MKT cùng ngồi lại (War Room) phân tích dữ liệu để chỉnh sửa chiến thuật.", dont: "Sales đổ tại 'Leads lởm', MKT đổ tại 'Sales lười chốt'. Công kích cá nhân." },
+                                { context: "Khi triển khai chiến dịch mới", do: "Tuân thủ tuyệt đối thông điệp và hình ảnh Branding đã thống nhất.", dont: "Sales tự ý 'sáng tạo' nội dung sai lệch định vị để dễ bán hàng." }
+                            ]
+                        },
+                        office: {
+                            role: "Back Office",
+                            items: [
+                                { context: "Khi có việc phát sinh ngoài JD", do: "Sẵn sàng hỗ trợ (Support) vì mục tiêu chung của công ty.", dont: "Từ chối thẳng thừng: 'Không phải việc của tôi' hoặc 'Không có trong quy trình'." },
+                                { context: "Khi thấy đồng nghiệp gặp khó", do: "Chủ động hướng dẫn hoặc chia sẻ tài nguyên.", dont: "Thờ ơ, hoặc tụ tập nói xấu, chê bai năng lực đồng nghiệp." }
+                            ]
+                        }
+                    },
+                    levels: [
+                        { 
+                            lv: 1, name: "Cần Điều Chỉnh Ngay", desc: "Dưới kỳ vọng (Below Expectations)", color: "text-red-500",
+                            indicators: [
+                                "Thường xuyên đổ lỗi, chối bỏ trách nhiệm khi gặp sự cố.",
+                                "Có hành vi gây chia rẽ, bè phái, làm mất đoàn kết nội bộ.",
+                                "Giữ thông tin làm 'của riêng', từ chối hợp tác với bộ phận khác."
+                            ],
+                            note: "⚠️ Ghi chú đánh giá: Đánh giá kém về thái độ. Không xét tăng lương/thưởng năm."
+                        },
+                        { 
+                            lv: 2, name: "Đang Phát Triển", desc: "Đang học hỏi (Developing)", color: "text-orange-500",
+                            indicators: [
+                                "Làm việc còn cục bộ, ít chủ động giao tiếp với các bên liên quan.",
+                                "Phối hợp còn chậm chạp, cần được đôn đốc để hoàn thành phần việc chung.",
+                                "Chưa tích cực đóng góp ý kiến trong các cuộc họp giải quyết vấn đề."
+                            ],
+                            note: "📝 Ghi chú đánh giá: Cần cải thiện kỹ năng làm việc nhóm (Teamwork)."
+                        },
+                        { 
+                            lv: 3, name: "Vững Vàng", desc: "Đạt chuẩn (Solid Performer)", color: "text-green-500",
+                            indicators: [
+                                "Hoàn thành tốt phần việc của mình theo đúng quy trình phối hợp (RACI).",
+                                "Phối hợp đúng hạn, đúng luồng, thái độ hợp tác.",
+                                "Dũng cảm nhận trách nhiệm về phần mình khi có sai sót."
+                            ],
+                            note: "✅ Ghi chú đánh giá: Đạt yêu cầu về văn hóa phối hợp."
+                        },
+                        { 
+                            lv: 4, name: "Bứt Phá", desc: "Vượt kỳ vọng (High Achiever)", color: "text-blue-500",
+                            indicators: [
+                                "Chủ động hỗ trợ đồng nghiệp/bộ phận khác ngay cả khi không được yêu cầu.",
+                                "Tích cực chia sẻ thông tin, tài nguyên hữu ích cho tập thể.",
+                                "Đề xuất các cách thức phối hợp mới giúp quy trình mượt mà hơn."
+                            ],
+                            note: "🌟 Ghi chú đánh giá: Điểm cộng lớn khi đánh giá năng lực lãnh đạo tiềm năng."
+                        },
+                        { 
+                            lv: 5, name: "Dẫn Dắt & Kiến Tạo", desc: "Hình mẫu (Role Model)", color: "text-yellow-500",
+                            indicators: [
+                                "Dẫn dắt thành công các dự án phức tạp liên quan đến nhiều phòng ban.",
+                                "Đứng ra hòa giải các mâu thuẫn, xung đột trong tổ chức.",
+                                "Xây dựng văn hóa 'One Team', gắn kết mọi người vì mục tiêu chung."
+                            ],
+                            note: "👑 Ghi chú đánh giá: Điều kiện cần để bổ nhiệm vị trí Quản lý/Trưởng nhóm."
+                        }
+                    ]
+                },
+                {
+                    id: "value4",
+                    title: "Linh Hoạt Trong Kỷ Luật",
+                    slogan: "Thích ứng bền vững",
+                    manifesto: "Chúng ta là 'Người khổng lồ linh hoạt'. Nhanh nhạy để bắt kịp xu hướng thị trường (Agility), nhưng phải dựa trên nền tảng dữ liệu và quy trình kiểm soát rủi ro (Discipline). Tự do nhưng không tự tiện.",
+                    icon: "fa-bolt",
+                    color: "text-purple-500",
+                    accent: "border-purple-500",
+                    strategy: {
+                        advantage: "Khai thác xu hướng mới nhanh nhất thị trường nhưng rủi ro thấp nhất.",
+                        kpi: "Time-to-market | Chi phí cơ hội"
+                    },
+                    behaviors: {
+                        business: {
+                            role: "Sales - Marketing",
+                            items: [
+                                { context: "Khi đối thủ tung khuyến mãi sốc", do: "Đề xuất ngay chiến thuật ngắn hạn (Tactical) để ứng phó, có tính toán P&L.", dont: "Tự ý phá giá để cạnh tranh mà không xin phép, gây nát thị trường." },
+                                { context: "Khi muốn thử kênh mới (vd: TikTok)", do: "Chạy thử nghiệm (Pilot) với ngân sách nhỏ, đo lường hiệu quả rồi mới Scale.", dont: "Dồn toàn lực làm theo cảm tính hoặc trào lưu mà không có dữ liệu." }
+                            ]
+                        },
+                        office: {
+                            role: "Back Office",
+                            items: [
+                                { context: "Khi có việc gấp cần xử lý", do: "Tạo luồng ưu tiên (Fast-track), cho phép xử lý trước - hoàn thiện giấy tờ sau.", dont: "Cứng nhắc: 'Quy trình là quy trình', thà để lỡ việc chứ không chịu linh động." },
+                                { context: "Khi quy trình trở nên lỗi thời", do: "Chủ động đề xuất cắt bỏ hoặc cải tiến.", dont: "Vẫn cắm đầu làm theo cách cũ dù biết là không hiệu quả." }
+                            ]
+                        }
+                    },
+                    levels: [
+                        { 
+                            lv: 1, name: "Cần Điều Chỉnh Ngay", desc: "Dưới kỳ vọng (Below Expectations)", color: "text-red-500",
+                            indicators: [
+                                "Tùy tiện phá vỡ các quy định cốt lõi gây rủi ro lớn cho công ty.",
+                                "Quá cứng nhắc, quan liêu gây ách tắc công việc khẩn cấp.",
+                                "Chống đối việc áp dụng công nghệ hoặc cách làm mới."
+                            ],
+                            note: "⚠️ Ghi chú đánh giá: Kiểm điểm trách nhiệm. Bồi thường thiệt hại (nếu có)."
+                        },
+                        { 
+                            lv: 2, name: "Đang Phát Triển", desc: "Đang học hỏi (Developing)", color: "text-orange-500",
+                            indicators: [
+                                "Làm việc còn máy móc, chưa biết cách xử lý linh hoạt trong tình huống phát sinh.",
+                                "Thử nghiệm cái mới nhưng thiếu báo cáo và đo lường hiệu quả.",
+                                "Còn ngại thay đổi, cần được khuyến khích để bỏ cách làm cũ."
+                            ],
+                            note: "📝 Ghi chú đánh giá: Chưa đủ điều kiện để được giao quyền quyết định."
+                        },
+                        { 
+                            lv: 3, name: "Vững Vàng", desc: "Đạt chuẩn (Solid Performer)", color: "text-green-500",
+                            indicators: [
+                                "Xử lý công việc nhanh, hiệu quả nhưng vẫn đảm bảo tuân thủ các chốt kiểm soát.",
+                                "Biết cách ứng biến và giải quyết vấn đề trong phạm vi thẩm quyền.",
+                                "Sử dụng thành thạo các công cụ/công nghệ được trang bị."
+                            ],
+                            note: "✅ Ghi chú đánh giá: Đạt yêu cầu về hiệu suất và tuân thủ."
+                        },
+                        { 
+                            lv: 4, name: "Bứt Phá", desc: "Vượt kỳ vọng (High Achiever)", color: "text-blue-500",
+                            indicators: [
+                                "Chủ động đề xuất cắt giảm các quy trình rườm rà, lãng phí.",
+                                "Ứng biến thông minh trong các tình huống bất ngờ giúp giảm thiểu thiệt hại.",
+                                "Tìm tòi và áp dụng các phương pháp mới giúp tăng năng suất."
+                            ],
+                            note: "🌟 Ghi chú đánh giá: Thưởng sáng kiến/cải tiến."
+                        },
+                        { 
+                            lv: 5, name: "Dẫn Dắt & Kiến Tạo", desc: "Hình mẫu (Role Model)", color: "text-yellow-500",
+                            indicators: [
+                                "Kiến tạo các quy trình tinh gọn (Lean) giúp tối ưu hóa vận hành tổ chức.",
+                                "Có tư duy chiến lược nhạy bén, biến nguy cơ thành cơ hội.",
+                                "Tiên phong dẫn dắt đội ngũ chuyển đổi số và đổi mới sáng tạo."
+                            ],
+                            note: "👑 Ghi chú đánh giá: Nhân sự hạt nhân trong các dự án đổi mới của công ty."
+                        }
+                    ]
+                },
+                {
+                    id: "value5",
+                    title: "Đẳng Cấp & Chuyên Nghiệp",
+                    slogan: "Chuẩn mực hạng A",
+                    manifesto: "Sản phẩm cao cấp không thể được bán bởi những con người 'bình dân'. Mỗi nhân viên HoanTT là một đại sứ thương hiệu. Cách bạn ăn mặc, giao tiếp, soạn thảo văn bản chính là bộ mặt của công ty.",
+                    icon: "fa-crown",
+                    color: "text-brand-gold",
+                    accent: "border-brand-gold",
+                    strategy: {
+                        advantage: "Quyền lực định giá (Pricing Power). Khách hàng trả giá cao vì trải nghiệm đẳng cấp.",
+                        kpi: "Brand Value | Tỷ lệ chốt đơn High-ticket"
+                    },
+                    behaviors: {
+                        business: {
+                            role: "Sales - Marketing",
+                            items: [
+                                { context: "Khi gặp gỡ khách hàng", do: "Trang phục công sở Business Attire, hoặc đồng phục công ty (tuỳ sự phù hợp). Đến sớm 10 phút. Sales Kit chuẩn bị sẵn sàng.", dont: "Ăn mặc lôi thôi (quần bò rách, dép lê). Đến trễ. Quên tài liệu." },
+                                { context: "Khi giao tiếp", do: "Dùng ngôn ngữ lịch sự, tôn trọng. Giữ thái độ điềm tĩnh chuyên nghiệp.", dont: "Nói tục, chửi thề, dùng từ ngữ 'chợ búa', suồng sã quá mức." }
+                            ]
+                        },
+                        office: {
+                            role: "Back Office",
+                            items: [
+                                { context: "Khi soạn thảo văn bản/Email", do: "Đúng format công ty, không lỗi chính tả, văn phong mạch lạc.", dont: "Cẩu thả, copy-paste sai tên người nhận, font chữ lộn xộn." },
+                                { context: "Khi giữ gìn không gian chung", do: "Thực hiện 5S bàn làm việc. Giữ vệ sinh chung.", dont: "Ăn uống bừa bãi tại bàn làm việc. Tụ tập gây ồn ào." }
+                            ]
+                        }
+                    },
+                    levels: [
+                        { 
+                            lv: 1, name: "Cần Điều Chỉnh Ngay", desc: "Dưới kỳ vọng (Below Expectations)", color: "text-red-500",
+                            indicators: [
+                                "Hình ảnh cá nhân nhếch nhác, thiếu tôn trọng người đối diện.",
+                                "Giao tiếp thô lỗ, thiếu văn hóa, làm xấu hình ảnh công ty.",
+                                "Chất lượng công việc cẩu thả, sai sót cơ bản liên tục."
+                            ],
+                            note: "⚠️ Ghi chú đánh giá: Không phù hợp với văn hóa công ty. Cân nhắc ngừng hợp tác."
+                        },
+                        { 
+                            lv: 2, name: "Đang Phát Triển", desc: "Đang học hỏi (Developing)", color: "text-orange-500",
+                            indicators: [
+                                "Trang phục và tác phong đôi khi chưa thực sự chỉn chu.",
+                                "Văn bản, tài liệu còn lỗi chính tả hoặc sai định dạng.",
+                                "Giao tiếp còn thiếu tự tin hoặc chưa đủ sự tinh tế."
+                            ],
+                            note: "📝 Ghi chú đánh giá: Cần chỉnh đốn tác phong làm việc."
+                        },
+                        { 
+                            lv: 3, name: "Vững Vàng", desc: "Đạt chuẩn (Solid Performer)", color: "text-green-500",
+                            indicators: [
+                                "Luôn giữ tác phong gọn gàng, lịch sự, đúng quy định.",
+                                "Đảm bảo chất lượng công việc đầu ra (Output) tốt, ít lỗi.",
+                                "Giao tiếp đúng mực, tôn trọng đồng nghiệp và đối tác."
+                            ],
+                            note: "✅ Ghi chú đánh giá: Đạt chuẩn mực văn hóa HoanTT."
+                        },
+                        { 
+                            lv: 4, name: "Bứt Phá", desc: "Vượt kỳ vọng (High Achiever)", color: "text-blue-500",
+                            indicators: [
+                                "Luôn có sự chuẩn bị kỹ lưỡng vượt mong đợi cho mọi công việc.",
+                                "Tài liệu trình bày thẩm mỹ cao, chuyên nghiệp.",
+                                "Kỹ năng giao tiếp sắc sảo, tạo được thiện cảm và ấn tượng tốt."
+                            ],
+                            note: "🌟 Ghi chú đánh giá: Đại diện công ty trong các sự kiện quan trọng."
+                        },
+                        { 
+                            lv: 5, name: "Dẫn Dắt & Kiến Tạo", desc: "Hình mẫu (Role Model)", color: "text-yellow-500",
+                            indicators: [
+                                "Là hình mẫu chuẩn mực về phong thái và sự chuyên nghiệp.",
+                                "Thiết lập và nâng cao các tiêu chuẩn chất lượng mới cho tổ chức.",
+                                "Đại diện xứng đáng cho thương hiệu, nâng tầm đẳng cấp của công ty."
+                            ],
+                            note: "👑 Ghi chú đánh giá: Biểu tượng văn hóa của tổ chức."
+                        }
+                    ]
+                }
+            ],
+            roadmap: [
+                { time: "THÁNG 1", name: "THIẾT LẬP", focus: "Nhận thức & Nền tảng", tasks: ["Chốt Value & Level", "Townhall công bố", "Audit quy trình"] },
+                { time: "THÁNG 2", name: "TÍCH HỢP", focus: "Đào tạo & Quy trình", tasks: ["Đào tạo 100% NV", "Sửa đổi quy trình", "KPI thái độ"] },
+                { time: "THÁNG 3", name: "VẬN HÀNH", focus: "Đánh giá & Thưởng phạt", tasks: ["Review nhân sự theo Level 1-5", "Áp dụng PIP cho L1/L2", "Vinh danh L5"] }
+            ]
+        };
+
+        // RENDER LOGIC
+        let currentTab = 'manifesto';
+
+        function renderView(viewId) {
+            const content = document.getElementById('app-content');
+            
+            // Nav Active State
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('nav-' + viewId).classList.add('active');
+
+            // DASHBOARD
+            if (viewId === 'dashboard') {
+                const d = db.dashboard;
+                content.innerHTML = `
+                    <div class="animate-fade-in space-y-8">
+                        <div class="glass-panel p-8 rounded-2xl border-l-4 border-brand-gold bg-gradient-to-r from-gray-900 to-transparent">
+                            <h2 class="text-3xl font-display font-bold text-white mb-2 uppercase">${d.title}</h2>
+                            <p class="text-gray-300 text-lg">${d.desc}</p>
+                            <div class="flex gap-6 mt-6">
+                                ${d.stats.map(s => `
+                                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-lg border border-white/10">
+                                        <i class="fa-solid ${s.icon} ${s.color} text-xl"></i>
+                                        <div>
+                                            <p class="text-2xl font-bold text-white leading-none">${s.value}</p>
+                                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">${s.label}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-gray-500 text-xs font-bold uppercase tracking-widest">Nỗi Đau & Giải Pháp (Pain vs Gain)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${db.dashboard.pains ? db.dashboard.pains.map(p => `
+                                <div class="glass-panel p-6 rounded-xl border-t border-gray-700">
+                                    <h4 class="text-white font-bold text-lg mb-2 ${p.color}"><i class="fa-solid ${p.icon} mr-2"></i>${p.title}</h4>
+                                    <p class="text-gray-400 text-sm mb-3">${p.desc}</p>
+                                    <div class="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded inline-block border border-gray-700">Hệ quả: <span class="${p.color} font-bold">${p.impact}</span></div>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // ROADMAP
+            if (viewId === 'roadmap') {
+                content.innerHTML = `
+                    <div class="animate-fade-in">
+                        <h2 class="text-3xl font-display font-bold text-white mb-8 uppercase border-b border-gray-700 pb-4">Lộ Trình 90 Ngày</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            ${db.roadmap.map((phase, i) => `
+                                <div class="glass-panel p-6 rounded-xl border-t-4 ${i===0?'border-brand-gold':(i===1?'border-blue-500':'border-green-500')}">
+                                    <h3 class="text-xl font-bold text-white mb-1">${phase.time}</h3>
+                                    <p class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">${phase.name}</p>
+                                    <div class="inline-block px-2 py-1 bg-gray-800 rounded text-[10px] text-brand-gold font-bold uppercase tracking-widest mb-4">Focus: ${phase.focus}</div>
+                                    <ul class="space-y-3">
+                                        ${phase.tasks.map(t => `<li class="flex items-start gap-3 text-sm text-gray-300"><i class="fa-solid fa-check text-green-500 mt-1"></i> ${t}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // CORE VALUES (With Tabs)
+            const val = db.values.find(v => v.id === viewId);
+            if (val) {
+                content.innerHTML = `
+                    <div class="animate-fade-in flex flex-col h-full">
+                        <!-- Header -->
+                        <div class="border-b border-gray-800 pb-6 mb-6">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-16 h-16 rounded-xl bg-gray-900 border border-gray-700 flex items-center justify-center ${val.color} shadow-lg">
+                                    <i class="fa-solid ${val.icon} text-3xl"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-4xl font-display font-bold text-white uppercase">${val.title}</h2>
+                                    <p class="text-2xl text-white font-light italic opacity-90">"${val.slogan}"</p>
+                                </div>
+                            </div>
+                            <!-- Tabs -->
+                            <div class="flex gap-2 overflow-x-auto pb-2">
+                                <button onclick="switchTab('manifesto', '${viewId}')" class="tab-btn ${currentTab === 'manifesto' ? 'active' : 'text-gray-500 hover:text-gray-300'} px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap">Tuyên Ngôn & Chiến Lược</button>
+                                <button onclick="switchTab('behaviors', '${viewId}')" class="tab-btn ${currentTab === 'behaviors' ? 'active' : 'text-gray-500 hover:text-gray-300'} px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap">Từ Điển Hành Vi</button>
+                                <button onclick="switchTab('levels', '${viewId}')" class="tab-btn ${currentTab === 'levels' ? 'active' : 'text-gray-500 hover:text-gray-300'} px-4 py-2 text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap">5 Cấp Độ & Đánh Giá</button>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content Container -->
+                        <div id="tab-content" class="flex-1 overflow-y-auto pr-2">
+                            ${getTabContent(val, currentTab)}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function switchTab(tab, viewId) {
+            currentTab = tab;
+            renderView(viewId);
+        }
+
+        function getTabContent(val, tab) {
+            if (tab === 'manifesto') {
+                return `
+                    <div class="animate-fade-in space-y-8">
+                        <div class="glass-panel p-8 rounded-xl border-l-4 ${val.accent}">
+                            <h3 class="text-white font-bold uppercase text-sm tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-scroll text-brand-gold"></i> Manifesto (Tuyên ngôn)
+                            </h3>
+                            <p class="text-xl text-gray-200 leading-relaxed font-light">"${val.manifesto}"</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="glass-panel p-6 rounded-xl bg-gray-900/50">
+                                <h3 class="text-gray-400 font-bold uppercase text-xs tracking-widest mb-3">Lợi Thế Cạnh Tranh (Why Us?)</h3>
+                                <p class="text-white text-lg">${val.strategy.advantage}</p>
+                            </div>
+                            <div class="glass-panel p-6 rounded-xl bg-gray-900/50">
+                                <h3 class="text-gray-400 font-bold uppercase text-xs tracking-widest mb-3">KPI Đo Lường (Metrics)</h3>
+                                <p class="text-brand-gold font-mono font-bold text-lg">${val.strategy.kpi}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'behaviors') {
+                return `
+                    <div class="animate-fade-in grid grid-cols-1 lg:grid-cols-2 gap-8 pb-10">
+                        <!-- Business Role -->
+                        <div class="glass-panel p-0 rounded-xl overflow-hidden h-fit">
+                            <div class="bg-gray-800 p-4 border-b border-gray-700 font-bold text-white text-sm uppercase flex justify-between items-center">
+                                <span><i class="fa-solid fa-briefcase mr-2 text-gray-500"></i> ${val.behaviors.business.role}</span>
+                            </div>
+                            <div class="p-4 space-y-6">
+                                ${val.behaviors.business.items.map(b => `
+                                    <div class="border-b border-gray-800 pb-4 last:border-0 last:pb-0">
+                                        <p class="text-xs text-gray-500 uppercase font-bold mb-2 tracking-wider"><i class="fa-solid fa-filter mr-1"></i> Bối cảnh: ${b.context}</p>
+                                        <div class="space-y-2">
+                                            <div class="flex gap-3 text-sm text-gray-200 bg-green-900/10 p-2 rounded border border-green-900/30">
+                                                <i class="fa-solid fa-check text-green-500 mt-0.5 shrink-0"></i> 
+                                                <span>${b.do}</span>
+                                            </div>
+                                            <div class="flex gap-3 text-sm text-gray-400 bg-red-900/10 p-2 rounded border border-red-900/30">
+                                                <i class="fa-solid fa-xmark text-red-500 mt-0.5 shrink-0"></i> 
+                                                <span class="line-through decoration-red-500/50">${b.dont}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Office Role -->
+                        <div class="glass-panel p-0 rounded-xl overflow-hidden h-fit">
+                            <div class="bg-gray-800 p-4 border-b border-gray-700 font-bold text-white text-sm uppercase flex justify-between items-center">
+                                <span><i class="fa-solid fa-building mr-2 text-gray-500"></i> ${val.behaviors.office.role}</span>
+                            </div>
+                            <div class="p-4 space-y-6">
+                                ${val.behaviors.office.items.map(b => `
+                                    <div class="border-b border-gray-800 pb-4 last:border-0 last:pb-0">
+                                        <p class="text-xs text-gray-500 uppercase font-bold mb-2 tracking-wider"><i class="fa-solid fa-filter mr-1"></i> Bối cảnh: ${b.context}</p>
+                                        <div class="space-y-2">
+                                            <div class="flex gap-3 text-sm text-gray-200 bg-green-900/10 p-2 rounded border border-green-900/30">
+                                                <i class="fa-solid fa-check text-green-500 mt-0.5 shrink-0"></i> 
+                                                <span>${b.do}</span>
+                                            </div>
+                                            <div class="flex gap-3 text-sm text-gray-400 bg-red-900/10 p-2 rounded border border-red-900/30">
+                                                <i class="fa-solid fa-xmark text-red-500 mt-0.5 shrink-0"></i> 
+                                                <span class="line-through decoration-red-500/50">${b.dont}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'levels') {
+                return `
+                    <div class="animate-fade-in space-y-4 pb-10">
+                        <div class="p-4 rounded-lg bg-blue-900/20 border border-blue-900/50 text-blue-200 text-sm mb-6 flex items-center gap-3">
+                            <i class="fa-solid fa-circle-info text-xl"></i>
+                            <p>Sử dụng khung này cho kỳ đánh giá Performance Review hàng tháng/quý. Nhân sự cần đạt tối thiểu Level 3 để được coi là "Hoàn thành nhiệm vụ".</p>
+                        </div>
+                        ${val.levels.map(lvl => `
+                            <div class="glass-panel p-5 rounded-lg flex flex-col md:flex-row gap-6 items-start hover:bg-white/5 transition group">
+                                <div class="w-full md:w-48 shrink-0 pt-1">
+                                    <span class="text-xs font-bold uppercase px-3 py-1.5 rounded block w-fit shadow-lg ${lvl.lv === 1 ? 'bg-red-900/40 text-red-400 border border-red-800' : (lvl.lv === 2 ? 'bg-orange-900/40 text-orange-400 border border-orange-800' : (lvl.lv === 3 ? 'bg-green-900/40 text-green-400 border border-green-800' : (lvl.lv === 5 ? 'bg-yellow-900/40 text-yellow-400 border border-yellow-800' : 'bg-blue-900/40 text-blue-400 border border-blue-700')))}">
+                                        Level ${lvl.lv}: ${lvl.name}
+                                    </span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-base text-white font-medium mb-3 group-hover:text-brand-gold transition">${lvl.desc}</p>
+                                    <ul class="space-y-2 mb-4">
+                                        ${lvl.indicators.map(ind => `
+                                            <li class="flex items-start gap-2 text-sm text-gray-400">
+                                                <span class="mt-1.5 w-1.5 h-1.5 rounded-full ${lvl.color} bg-current"></span>
+                                                ${ind}
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                    <div class="mt-4 pt-3 border-t border-white/10 text-xs font-mono opacity-80">
+                                        ${lvl.note}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderView('dashboard');
+        });
+
+    </script>
+</body>
+</html>
